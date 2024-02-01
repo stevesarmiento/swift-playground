@@ -20,6 +20,82 @@ struct ArcNavvy: View {
             Spacer()
             HStack {
                 if !isExpanded {
+                    tabsButton
+                    
+                    Spacer()
+                }
+                
+                if !isExpanded {
+                    searchButton
+                    
+                    Spacer()
+                }
+
+                if isExpanded { 
+                    expandedNav
+
+                } else {
+                    chevButton
+                }
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
+            .frame(maxWidth: .infinity)
+            .frame(height: isExpanded ? 270 : 77)
+            .background(
+                BlurBackground().clipShape(RoundedRectangle(cornerRadius: isExpanded ? 40 : 0))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: isExpanded ? 40 : 0)
+                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
+            )
+            .animation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0), value: isExpanded)
+
+    
+        }
+        .offset(y: dragOffset.height)
+        .edgesIgnoringSafeArea(.bottom)
+        .gesture(
+            DragGesture()
+                .updating($dragOffset, body: { (value, state, transaction) in
+                    state = value.translation
+                })
+                .onEnded { value in
+                    if value.translation.height > 70 {
+                        withAnimation(.easeOut(duration: 0.3)) {
+                            self.isExpanded = false
+                        }
+                    }
+                }
+        )       
+    }
+}
+
+struct BlurBackground: View {
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.1) 
+            VisualEffectBlur(blurStyle: .systemThinMaterialDark) 
+        }
+        .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct VisualEffectBlur: UIViewRepresentable {
+    var blurStyle: UIBlurEffect.Style
+    
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        return UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: blurStyle)
+    }
+}
+
+extension ArcNavvy {
+    private var tabsButton: some View {
+                VStack{
                     Button(action: {
                         let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                         impactFeedbackGenerator.prepare() 
@@ -52,11 +128,12 @@ struct ArcNavvy: View {
                     .frame(maxWidth: .infinity)
                     .buttonStyle(PlainButtonStyle())
                     .pressAnimation()
-
-                    Spacer()
                 }
-                
-                if !isExpanded {
+
+    }
+
+    private var searchButton: some View {
+                VStack{
                     Button(action: {
                         let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                         impactFeedbackGenerator.prepare() 
@@ -82,12 +159,44 @@ struct ArcNavvy: View {
                     .pressAnimation()
 
                     
-                    Spacer()
                 }
 
-                if isExpanded { 
+    }
+
+    private var chevButton: some View {
+                VStack{
+                    Button(action: {
+                        let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                        impactFeedbackGenerator.prepare() 
+                        impactFeedbackGenerator.impactOccurred()
+                        self.isExpanded.toggle()
+                    }) {
+                        VStack {
+                            Image(systemName: "chevron.up")
+                            .font(.system(size: 16))
+                            .foregroundColor(.white)
+                            .bold()
+                        }
+                        .frame(width: 16, height: 16)
+                        .padding(10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 50)
+                                .fill(Color.white.opacity(0.1))
+                                .stroke(Color.white.opacity(0.1), lineWidth: 1)                           
+                                .matchedGeometryEffect(id: "searchBarIcon", in: animation)
+                        )
+                        .offset(x:25)
+
+                    }
+                    .frame(maxWidth: .infinity)
+                    .buttonStyle(PlainButtonStyle())
+                    .pressAnimation()                    
+                }
+
+    }
+
+    private var expandedNav: some View {
                     VStack {
-                        //seach bar
                         HStack {
                             Image(systemName: "chevron.left")
                                 .frame(width: 18)
@@ -244,89 +353,6 @@ struct ArcNavvy: View {
                         .padding(.top, 10)               
                     }
                     .transition(.move(edge: .bottom).combined(with: .opacity))
-
-
-                } else {
-                    // chevron up
-                    Button(action: {
-                        let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-                        impactFeedbackGenerator.prepare() 
-                        impactFeedbackGenerator.impactOccurred()
-                        self.isExpanded.toggle()
-                    }) {
-                        VStack {
-                            Image(systemName: "chevron.up")
-                            .font(.system(size: 16))
-                            .foregroundColor(.white)
-                            .bold()
-                        }
-                        .frame(width: 16, height: 16)
-                        .padding(10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 50)
-                                .fill(Color.white.opacity(0.1))
-                                .stroke(Color.white.opacity(0.1), lineWidth: 1)                           
-                                .matchedGeometryEffect(id: "searchBarIcon", in: animation)
-                        )
-                        .offset(x:25)
-
-                    }
-                    .frame(maxWidth: .infinity)
-                    .buttonStyle(PlainButtonStyle())
-                    .pressAnimation()
-                }
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
-            .frame(maxWidth: .infinity)
-            .frame(height: isExpanded ? 270 : 77)
-            .background(
-                BlurBackground().clipShape(RoundedRectangle(cornerRadius: isExpanded ? 40 : 0))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: isExpanded ? 40 : 0)
-                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
-            )
-            .animation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0), value: isExpanded)
-
-    
-        }
-        .offset(y: dragOffset.height)
-        .edgesIgnoringSafeArea(.bottom)
-        .gesture(
-            DragGesture()
-                .updating($dragOffset, body: { (value, state, transaction) in
-                    state = value.translation
-                })
-                .onEnded { value in
-                    if value.translation.height > 70 {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            self.isExpanded = false
-                        }
-                    }
-                }
-        )       
-    }
-}
-
-struct BlurBackground: View {
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.1) 
-            VisualEffectBlur(blurStyle: .systemThinMaterialDark) 
-        }
-        .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct VisualEffectBlur: UIViewRepresentable {
-    var blurStyle: UIBlurEffect.Style
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        return UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
     }
     
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.effect = UIBlurEffect(style: blurStyle)
-    }
 }

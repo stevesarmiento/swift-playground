@@ -16,58 +16,77 @@ struct ArcNavvy: View {
 
 
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                if !isExpanded {
-                    tabsButton
-                    
-                    Spacer()
-                }
-                
-                if !isExpanded {
-                    searchButton
-                    
-                    Spacer()
-                }
-
-                if isExpanded { 
-                    expandedNav
-
-                } else {
-                    chevButton
+        GeometryReader { _ in
+            if isExpanded {
+                Button(action: {
+                    withAnimation {
+                        isExpanded = false
+                    }
+                }) {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .edgesIgnoringSafeArea(.all)
                 }
             }
-            .padding(.horizontal)
-            .padding(.bottom)
-            .frame(maxWidth: .infinity)
-            .frame(height: isExpanded ? 270 : 77)
-            .background(
-                BlurBackground().clipShape(RoundedRectangle(cornerRadius: isExpanded ? 40 : 0))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: isExpanded ? 40 : 0)
-                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
-            )
-            .animation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0), value: isExpanded)
 
-    
-        }
-        .offset(y: dragOffset.height)
-        .edgesIgnoringSafeArea(.bottom)
-        .gesture(
-            DragGesture()
-                .updating($dragOffset, body: { (value, state, transaction) in
-                    state = value.translation
-                })
-                .onEnded { value in
-                    if value.translation.height > 70 {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            self.isExpanded = false
-                        }
+        ZStack{
+            VStack {
+                Spacer()
+                HStack {
+                    if !isExpanded {
+                        tabsButton
+                        
+                        Spacer()
+                    }
+                    
+                    if !isExpanded {
+                        searchButton
+                        
+                        Spacer()
+                    }
+
+                    if isExpanded { 
+                        expandedOptions
+
+                    } else {
+                        chevButton
                     }
                 }
-        )       
+                .padding(.horizontal)
+                .padding(.bottom)
+                .frame(maxWidth: .infinity)
+                .frame(height: isExpanded ? 270 : 77)
+                .background(
+                    BlurBackground().clipShape(RoundedRectangle(cornerRadius: isExpanded ? 40 : 0))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: isExpanded ? 40 : 0)
+                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                )
+                .animation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 0), value: isExpanded)
+
+        
+            }
+            .offset(y: dragOffset.height)
+            .edgesIgnoringSafeArea(.bottom)
+            .gesture(
+                DragGesture()
+                    .updating($dragOffset, body: { (value, state, transaction) in
+                        if value.translation.height > 0 {
+                            state = value.translation
+                        }
+                    })
+                    .onEnded { value in
+                        if value.translation.height > 5 {
+                            withAnimation(.easeOut(duration: 0.3)) {
+                                self.isExpanded = false
+                            }
+                        }
+                    }
+            )             
+        }
+        .edgesIgnoringSafeArea(.all)
+        }
     }
 }
 
@@ -183,7 +202,7 @@ extension ArcNavvy {
                             RoundedRectangle(cornerRadius: 50)
                                 .fill(Color.white.opacity(0.1))
                                 .stroke(Color.white.opacity(0.1), lineWidth: 1)                           
-                                .matchedGeometryEffect(id: "searchBarIcon", in: animation)
+                                .matchedGeometryEffect(id: "searchBarIcon", in: animation, anchor: .leading)
                         )
                         .offset(x:25)
 
@@ -195,7 +214,7 @@ extension ArcNavvy {
 
     }
 
-    private var expandedNav: some View {
+    private var expandedOptions: some View {
                     VStack {
                         HStack {
                             Image(systemName: "chevron.left")
@@ -234,7 +253,7 @@ extension ArcNavvy {
                             RoundedRectangle(cornerRadius: 25)
                                 .fill(Color.white.opacity(0.1))
                                 .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                                .matchedGeometryEffect(id: "searchBarIcon", in: animation)
+                                .matchedGeometryEffect(id: "searchBarIcon", in: animation, anchor: .leading)
                         )
 
                         HStack(spacing: 20) { 

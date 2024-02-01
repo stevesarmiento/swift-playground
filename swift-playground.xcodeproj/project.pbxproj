@@ -13,7 +13,6 @@
 		F3D568AB2B5B5B810097B079 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D568AA2B5B5B810097B079 /* ContentView.swift */; };
 		F3D568AD2B5B5B820097B079 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3D568AC2B5B5B820097B079 /* Assets.xcassets */; };
 		F3D568B02B5B5B820097B079 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3D568AF2B5B5B820097B079 /* Preview Assets.xcassets */; };
-		F3D568B72B5B67180097B079 /* FloatingMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D568B62B5B67180097B079 /* FloatingMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +23,6 @@
 		F3D568AA2B5B5B810097B079 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F3D568AC2B5B5B820097B079 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F3D568AF2B5B5B820097B079 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F3D568B62B5B67180097B079 /* FloatingMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				F38A73272B6B14F500723197 /* ArcNavvy.swift */,
-				F3D568B62B5B67180097B079 /* FloatingMenuView.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -164,7 +161,6 @@
 			files = (
 				F3D568AB2B5B5B810097B079 /* ContentView.swift in Sources */,
 				F306DC522B6B481F00108861 /* AnimationUtility.swift in Sources */,
-				F3D568B72B5B67180097B079 /* FloatingMenuView.swift in Sources */,
 				F3D568A92B5B5B810097B079 /* swift_playgroundApp.swift in Sources */,
 				F38A73282B6B14F500723197 /* ArcNavvy.swift in Sources */,
 			);

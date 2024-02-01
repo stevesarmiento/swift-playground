@@ -12,17 +12,11 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(red: 0.631, green: 0.173, blue: 1.0)
-, Color(red: 0.2, green: 0.067, blue: 1.0)]), startPoint: .top, endPoint: .bottom)
+            RadialGradient(gradient: Gradient(colors: [Color(red: 0.247, green: 0.106, blue: 0.153), Color(red: 0.133, green: 0.067, blue: 0.118)]), center: .trailing, startRadius: 5, endRadius: 400)
                 .edgesIgnoringSafeArea(.all)
-        VStack {
-            FloatingMenuView(isMenuOpen: $isMenuOpen)
-           }
-           .padding()
+            VStack {
+                ArcNavvy()
+            }
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

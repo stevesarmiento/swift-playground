@@ -214,6 +214,10 @@ extension ArcNavvy {
 
     }
 
+    private var expandedSearch: some View {
+        
+    }
+
     private var expandedOptions: some View {
                     VStack {
                         HStack {

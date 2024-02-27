@@ -39,6 +39,9 @@ extension View {
     func pressAnimation() -> some View {
         self.modifier(PressAnimation())
     }
+    // func pressBackgroundModifier() -> some View {
+    //     self.modifier(PressBackgroundModifier())
+    // }
     func scaleUpAnimation() -> some View {
         self.modifier(ScaleUpAnimation())
     }
@@ -169,6 +172,21 @@ struct AnimatedGradient: ViewModifier {
             }
     }
 }
+
+// struct PressBackgroundModifier: ViewModifier {
+//     @GestureState private var isPressed = false
+
+//     func body(content: Content) -> some View {
+//         content
+//             .background(isPressed ? Color.gray.opacity(0.1) : Color.clear)
+//             .gesture(
+//                 LongPressGesture(minimumDuration: 0.1)
+//                     .updating($isPressed) { currentState, gestureState, _ in
+//                         gestureState = currentState
+//                     }
+//             )
+//     }
+// }
 
 struct PressAnimation: ViewModifier {
     @State private var isPressed = false

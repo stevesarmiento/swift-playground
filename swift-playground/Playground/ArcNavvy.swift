@@ -10,11 +10,35 @@ import SwiftUI
 struct ArcNavvy: View {
     @State private var searchText = ""
     @State private var isExpanded = false
+    @State private var expandedContentType: ExpandedContentType = .none
+    
     @GestureState private var dragOffset = CGSize.zero
+
     @Namespace private var animation
 
-
-
+    let chevronExpandedHeight: CGFloat = 270
+    let searchExpandedHeight: CGFloat = 620
+    
+    let webPageLinks: [WebPageLink] = [
+        WebPageLink(name: "Mango", iconName: "mango"),
+        WebPageLink(name: "Triton", iconName: "triton"),
+    ]
+    
+    let desktopPageLinks: [DesktopPageLink] = [
+        DesktopPageLink(name: "TidyDesk", iconName: "tidydesk"),
+    ]
+    
+    let mobilePageLinks: [MobilePageLink] = [
+        MobilePageLink(name: "Aufn", iconName: "aufn"),
+        MobilePageLink(name: "Toshi", iconName: "toshi"),
+        MobilePageLink(name: "Nikko", iconName: "nikko"),
+        MobilePageLink(name: "Nightlight", iconName: "nightlight"),
+    ]
+    
+    enum ExpandedContentType {
+        case none, chevron, search, tabs
+    }
+    
     var body: some View {
         GeometryReader { _ in
             if isExpanded {
@@ -32,6 +56,7 @@ struct ArcNavvy: View {
         ZStack{
             VStack {
                 Spacer()
+                
                 HStack {
                     if !isExpanded {
                         tabsButton
@@ -45,9 +70,17 @@ struct ArcNavvy: View {
                         Spacer()
                     }
 
-                    if isExpanded { 
-                        expandedOptions
-
+                    if isExpanded {
+                        switch expandedContentType {
+                        case .chevron:
+                            expandedOptions
+                        case .search:
+                            expandedSearch
+                        // case .tabs:
+                        //     expandedTabs
+                        default:
+                            EmptyView()
+                        }
                     } else {
                         chevButton
                     }
@@ -55,7 +88,7 @@ struct ArcNavvy: View {
                 .padding(.horizontal)
                 .padding(.bottom)
                 .frame(maxWidth: .infinity)
-                .frame(height: isExpanded ? 270 : 77)
+                .frame(height: isExpanded ? (expandedContentType == .search ? searchExpandedHeight : chevronExpandedHeight) : 77)
                 .background(
                     BlurBackground().clipShape(RoundedRectangle(cornerRadius: isExpanded ? 40 : 0))
                 )
@@ -90,29 +123,45 @@ struct ArcNavvy: View {
     }
 }
 
-struct BlurBackground: View {
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.1) 
-            VisualEffectBlur(blurStyle: .systemThinMaterialDark) 
-        }
-        .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct VisualEffectBlur: UIViewRepresentable {
-    var blurStyle: UIBlurEffect.Style
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        return UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.effect = UIBlurEffect(style: blurStyle)
-    }
-}
-
 extension ArcNavvy {
+    
+    struct WebPageLink {
+        let name: String
+        let iconName: String
+    }
+    
+    struct DesktopPageLink {
+        let name: String
+        let iconName: String
+    }
+    
+    struct MobilePageLink {
+        let name: String
+        let iconName: String
+    }
+    
+    struct BlurBackground: View {
+        var body: some View {
+            ZStack {
+                Color.white.opacity(0.5)
+                VisualEffectBlur(blurStyle: .systemThinMaterialDark)
+            }
+            .edgesIgnoringSafeArea(.all)
+        }
+    }
+
+    struct VisualEffectBlur: UIViewRepresentable {
+        var blurStyle: UIBlurEffect.Style
+        
+        func makeUIView(context: Context) -> UIVisualEffectView {
+            return UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
+        }
+        
+        func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+            uiView.effect = UIBlurEffect(style: blurStyle)
+        }
+    }
+
     private var tabsButton: some View {
                 VStack{
                     Button(action: {
@@ -157,7 +206,9 @@ extension ArcNavvy {
                         let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                         impactFeedbackGenerator.prepare() 
                         impactFeedbackGenerator.impactOccurred()
-                        // Action for Home
+                        self.isExpanded.toggle()
+                        self.expandedContentType = .search
+
                     }) {
                         VStack {
                             Image(systemName: "magnifyingglass")
@@ -167,10 +218,11 @@ extension ArcNavvy {
                         }
                         .padding(.horizontal, 24)
                         .padding(.vertical, 8)
-                        .background(Color.white.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 25))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 25).stroke(Color.white.opacity(0.1), lineWidth: 1)
+                        .background(
+                            RoundedRectangle(cornerRadius: 50)
+                                .fill(Color.white.opacity(0.1))
+                                .stroke(Color.white.opacity(0.1), lineWidth: 1)                           
+                                .matchedGeometryEffect(id: "portfolioBtn", in: animation, anchor: .leading)
                         )
                     }
                     .frame(maxWidth: .infinity)
@@ -189,6 +241,8 @@ extension ArcNavvy {
                         impactFeedbackGenerator.prepare() 
                         impactFeedbackGenerator.impactOccurred()
                         self.isExpanded.toggle()
+                        self.expandedContentType = .chevron
+
                     }) {
                         VStack {
                             Image(systemName: "chevron.up")
@@ -214,9 +268,160 @@ extension ArcNavvy {
 
     }
 
-    // private var expandedSearch: some View {
+    private var expandedSearch: some View {
+         VStack {
+                HStack {
+                            TextField("", text: $searchText)
+                                .overlay(
+                                    HStack {
+                                    Text("Design & Dev Work...")
+                                        .font(.system(size: 20))
+                                        .bold()
+                                        .foregroundColor(.white.opacity(0.3))
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "eyes")
+                                            .resizable()
+                                            .bold()
+                                            .frame(width: 25, height: 20)
+                                            .foregroundColor(Color.white.opacity(0.4))
+                                    }
+                                )
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 25)
+                                .fill(Color.white.opacity(0.1))
+                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                                .matchedGeometryEffect(id: "portfolioBtn", in: animation, anchor: .leading)
+                        )
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Web")
+                        .font(.system(size: 14))
+                        .bold()
+                        .foregroundColor(.white.opacity(0.5))
+                    ForEach(webPageLinks.indices, id: \.self) { index in
+                        HStack {
+                            Image(webPageLinks[index].iconName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
 
-    // }
+                            Text(webPageLinks[index].name)
+                                .foregroundColor(.white)
+                                .bold()
+
+                            Spacer()
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 10)
+                        .onTapGesture {
+                            print("Tapped on \(webPageLinks[index].name)")
+                        }
+                        .background(
+                            RoundedRectangle(cornerRadius: 13)
+                                .fill(Color.white.opacity(0.05))
+                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                        )
+                        .pressAnimation()
+                    }
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(Color.white.opacity(0.05))
+                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                )
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("iOS")
+                        .font(.system(size: 14))
+                        .bold()
+                        .foregroundColor(.white.opacity(0.5))
+                    ForEach(mobilePageLinks.indices, id: \.self) { index in
+                        HStack {
+                            Image(mobilePageLinks[index].iconName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                            Text(mobilePageLinks[index].name)
+                                .foregroundColor(.white)
+                                .bold()
+
+                            Spacer()
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 10)
+                        .onTapGesture {
+                            print("Tapped on \(mobilePageLinks[index].name)")
+                        }
+                        .background(
+                            RoundedRectangle(cornerRadius: 13)
+                                .fill(Color.white.opacity(0.05))
+                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                        )
+                        .pressAnimation()
+                    }
+
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(Color.white.opacity(0.05))
+                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                )
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("macOS")
+                        .font(.system(size: 14))
+                        .bold()
+                        .foregroundColor(.white.opacity(0.5))
+                    ForEach(desktopPageLinks.indices, id: \.self) { index in
+                        HStack {
+                            Image(desktopPageLinks[index].iconName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 30, height: 30)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                            Text(desktopPageLinks[index].name)
+                                .foregroundColor(.white)
+                                .bold()
+
+                            Spacer()
+                        }
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 10)
+                        .onTapGesture {
+                            print("Tapped on \(desktopPageLinks[index].name)")
+                        }
+                        .background(
+                            RoundedRectangle(cornerRadius: 13)
+                                .fill(Color.white.opacity(0.05))
+                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                        )
+                        .pressAnimation()
+                    }
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 25)
+                        .fill(Color.white.opacity(0.05))
+                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                )
+            }
+         }
+         .padding(.vertical)
+     }
+
+    // private var expandedTabs: some View {
+
+    //  }
 
     private var expandedOptions: some View {
                     VStack {

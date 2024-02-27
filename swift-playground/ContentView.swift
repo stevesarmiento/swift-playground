@@ -30,6 +30,7 @@ var body: some View {
                     .offset(position)
                     .rotationEffect(.degrees(rotationAngle))
                     .scaleEffect(isScaledUp ? 1.2 : 1)
+                    .shadow(color: isScaledUp ? Color.black.opacity(1) : Color.black.opacity(0.2), radius: isScaledUp ? 10 : 2, x: 0, y: 5)                    
                     .gesture(
                         TapGesture()
                             .simultaneously(with: DragGesture(minimumDistance: 0)

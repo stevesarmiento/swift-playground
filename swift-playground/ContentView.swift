@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @State private var position = CGSize.zero
     @State private var rotationAngle = 0.0
-    // @State private var lastHapticAngle = 0.0
     @State private var isSpinning = false
     @State private var isScaledUp = false
     @State private var hapticFeedbackTriggered = false
@@ -49,22 +48,11 @@ var body: some View {
                                     withAnimation(.easeOut) {
                                         self.isScaledUp = false
                                         self.position = .zero
-                                        self.hapticFeedbackTriggered = false // Reset for the next gesture
+                                        self.hapticFeedbackTriggered = false
                                     }
                                 }
                             )
                     )
-                    // .gesture(
-                    //     DragGesture()
-                    //         .onChanged { gesture in
-                    //             self.position = gesture.translation
-                    //         }
-                    //         .onEnded { _ in
-                    //             withAnimation {
-                    //                 self.position = .zero
-                    //             }
-                    //         }
-                    // )
                 VStack {
                     Spacer()
                     ArcNavvy()
@@ -76,14 +64,6 @@ var body: some View {
                         let swipeDistance = gesture.translation.width
                         let rotationDegrees = swipeDistance / 2
                         self.rotationAngle = -rotationDegrees
-
-                            // let hapticThreshold = 10.0
-                            // let rotationDifference = abs(self.rotationAngle - self.lastHapticAngle)
-                            // if rotationDifference >= hapticThreshold {
-                            //     let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .soft)
-                            //     impactFeedbackGenerator.impactOccurred()
-                            //     self.lastHapticAngle = self.rotationAngle
-                            // }
                     }
                     .onEnded { gesture in
                         let swipeVelocity = gesture.predictedEndTranslation.width - gesture.translation.width

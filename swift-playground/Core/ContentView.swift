@@ -58,10 +58,12 @@ var body: some View {
                                 }
                             )
                     )
+
                 VStack {
                     Spacer()
                     ArcNavvy()
                 }
+
             }
             .gesture(
                 DragGesture(minimumDistance: 0, coordinateSpace: .local)

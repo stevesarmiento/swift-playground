@@ -11,7 +11,7 @@ struct ArcNavvy: View {
     @State private var searchText = ""
     @State private var isExpanded = false
     @State private var expandedContentType: ExpandedContentType = .none
-    
+    @State private var selectedContent: String? = nil
     @GestureState private var dragOffset = CGSize.zero
 
     @Namespace private var animation
@@ -25,7 +25,7 @@ struct ArcNavvy: View {
     ]
     
     let desktopPageLinks: [DesktopPageLink] = [
-        DesktopPageLink(name: "TidyDesk", iconName: "tidydesk"),
+        DesktopPageLink(name: "Tidydesk", iconName: "tidydesk"),
     ]
     
     let mobilePageLinks: [MobilePageLink] = [
@@ -116,7 +116,11 @@ struct ArcNavvy: View {
                             }
                         }
                     }
-            )             
+            )   
+
+          if let selectedContentName = selectedContent {
+                contentView(for: selectedContentName)
+            }          
         }
         .edgesIgnoringSafeArea(.all)
         }
@@ -147,6 +151,33 @@ extension ArcNavvy {
                 VisualEffectBlur(blurStyle: .systemThinMaterialDark)
             }
             .edgesIgnoringSafeArea(.all)
+        }
+    }
+
+    func contentView(for name: String) -> some View {
+        switch name {
+        case "Aufn":
+            return AnyView(AufnPage(onClose: closeContentPage))
+        case "Toshi":
+            return AnyView(ToshiPage(onClose: closeContentPage))
+        case "Nikko":
+            return AnyView(NikkoPage(onClose: closeContentPage))
+         case "Nightlight":
+            return AnyView(NightlightPage(onClose: closeContentPage))   
+         case "Tidydesk":
+            return AnyView(TidydeskPage(onClose: closeContentPage))  
+         case "Mango":
+            return AnyView(MangoPage(onClose: closeContentPage))  
+         case "Triton":
+            return AnyView(TritonPage(onClose: closeContentPage))          
+        default:
+            return AnyView(Text("Page not found"))
+        }
+    }
+
+    func closeContentPage() {
+        withAnimation {
+            selectedContent = nil
         }
     }
 
@@ -297,36 +328,42 @@ extension ArcNavvy {
                                 .matchedGeometryEffect(id: "portfolioBtn", in: animation, anchor: .leading)
                         )
             ScrollView {
+                // Web
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Web")
                         .font(.system(size: 14))
                         .bold()
                         .foregroundColor(.white.opacity(0.5))
                     ForEach(webPageLinks.indices, id: \.self) { index in
-                        HStack {
-                            Image(webPageLinks[index].iconName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Button(action: {
+                                let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                impactFeedbackGenerator.prepare() 
+                                impactFeedbackGenerator.impactOccurred()
+                                self.selectedContent = webPageLinks[index].name
+                            }) {
+                                HStack {
+                                    Image(webPageLinks[index].iconName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
 
-                            Text(webPageLinks[index].name)
-                                .foregroundColor(.white)
-                                .bold()
+                                    Text(webPageLinks[index].name)
+                                        .foregroundColor(.white)
+                                        .bold()
 
-                            Spacer()
-                        }
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 10)
-                        .onTapGesture {
-                            print("Tapped on \(webPageLinks[index].name)")
-                        }
-                        .background(
-                            RoundedRectangle(cornerRadius: 13)
-                                .fill(Color.white.opacity(0.05))
-                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                        )
-                        .pressAnimation()
+                                    Spacer()
+                                }
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 13)
+                                        .fill(Color.white.opacity(0.05))
+                                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                                )
+                                //.pressAnimation()
+                            }                    
+
                     }
                 }
                 .padding()
@@ -335,38 +372,42 @@ extension ArcNavvy {
                         .fill(Color.white.opacity(0.05))
                         .stroke(Color.white.opacity(0.1), lineWidth: 1)
                 )
-                
+                // Mobile
                 VStack(alignment: .leading, spacing: 10) {
                     Text("iOS")
                         .font(.system(size: 14))
                         .bold()
                         .foregroundColor(.white.opacity(0.5))
                     ForEach(mobilePageLinks.indices, id: \.self) { index in
-                        HStack {
-                            Image(mobilePageLinks[index].iconName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Button(action: {
+                                let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                impactFeedbackGenerator.prepare() 
+                                impactFeedbackGenerator.impactOccurred()
+                                self.selectedContent = mobilePageLinks[index].name
+                            }) {
+                                HStack {
+                                    Image(mobilePageLinks[index].iconName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
 
-                            Text(mobilePageLinks[index].name)
-                                .foregroundColor(.white)
-                                .bold()
+                                    Text(mobilePageLinks[index].name)
+                                        .foregroundColor(.white)
+                                        .bold()
 
-                            Spacer()
+                                    Spacer()
+                                }
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 13)
+                                        .fill(Color.white.opacity(0.05))
+                                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                                )
+                                //.pressAnimation()
+                            }
                         }
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 10)
-                        .onTapGesture {
-                            print("Tapped on \(mobilePageLinks[index].name)")
-                        }
-                        .background(
-                            RoundedRectangle(cornerRadius: 13)
-                                .fill(Color.white.opacity(0.05))
-                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                        )
-                        .pressAnimation()
-                    }
 
                 }
                 .padding()
@@ -375,37 +416,42 @@ extension ArcNavvy {
                         .fill(Color.white.opacity(0.05))
                         .stroke(Color.white.opacity(0.1), lineWidth: 1)
                 )
-                
+                // macOS
                 VStack(alignment: .leading, spacing: 10) {
                     Text("macOS")
                         .font(.system(size: 14))
                         .bold()
                         .foregroundColor(.white.opacity(0.5))
                     ForEach(desktopPageLinks.indices, id: \.self) { index in
-                        HStack {
-                            Image(desktopPageLinks[index].iconName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                         Button(action: {
+                                let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                                impactFeedbackGenerator.prepare() 
+                                impactFeedbackGenerator.impactOccurred()
+                                self.selectedContent = desktopPageLinks[index].name
+                            }) {
+                                HStack {
+                                    Image(desktopPageLinks[index].iconName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
 
-                            Text(desktopPageLinks[index].name)
-                                .foregroundColor(.white)
-                                .bold()
+                                    Text(desktopPageLinks[index].name)
+                                        .foregroundColor(.white)
+                                        .bold()
 
-                            Spacer()
-                        }
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 10)
-                        .onTapGesture {
-                            print("Tapped on \(desktopPageLinks[index].name)")
-                        }
-                        .background(
-                            RoundedRectangle(cornerRadius: 13)
-                                .fill(Color.white.opacity(0.05))
-                                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                        )
-                        .pressAnimation()
+                                    Spacer()
+                                }
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 13)
+                                        .fill(Color.white.opacity(0.05))
+                                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
+                                )
+                                //.pressAnimation()
+                            }                   
+
                     }
                 }
                 .padding()

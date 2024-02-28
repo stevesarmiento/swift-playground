@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		F306DC522B6B481F00108861 /* AnimationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F306DC512B6B481F00108861 /* AnimationUtility.swift */; };
+		F340EB792B8EB4DB00BFD481 /* MangoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB782B8EB4DB00BFD481 /* MangoPage.swift */; };
+		F340EB7C2B8EB4F500BFD481 /* TritonPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB7B2B8EB4F500BFD481 /* TritonPage.swift */; };
+		F340EB7F2B8EB52100BFD481 /* AufnPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB7E2B8EB52100BFD481 /* AufnPage.swift */; };
+		F340EB822B8EB54300BFD481 /* NikkoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB812B8EB54300BFD481 /* NikkoPage.swift */; };
+		F340EB852B8EB55C00BFD481 /* ToshiPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB842B8EB55C00BFD481 /* ToshiPage.swift */; };
+		F340EB872B8EB56F00BFD481 /* NightlightPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB862B8EB56F00BFD481 /* NightlightPage.swift */; };
+		F340EB8A2B8EB59C00BFD481 /* TidydeskPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB892B8EB59C00BFD481 /* TidydeskPage.swift */; };
 		F38A73282B6B14F500723197 /* ArcNavvy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38A73272B6B14F500723197 /* ArcNavvy.swift */; };
 		F3D568A92B5B5B810097B079 /* swift_portfolioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D568A82B5B5B810097B079 /* swift_portfolioApp.swift */; };
 		F3D568AB2B5B5B810097B079 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D568AA2B5B5B810097B079 /* ContentView.swift */; };
@@ -17,6 +24,13 @@
 
 /* Begin PBXFileReference section */
 		F306DC512B6B481F00108861 /* AnimationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationUtility.swift; sourceTree = "<group>"; };
+		F340EB782B8EB4DB00BFD481 /* MangoPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangoPage.swift; sourceTree = "<group>"; };
+		F340EB7B2B8EB4F500BFD481 /* TritonPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TritonPage.swift; sourceTree = "<group>"; };
+		F340EB7E2B8EB52100BFD481 /* AufnPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AufnPage.swift; sourceTree = "<group>"; };
+		F340EB812B8EB54300BFD481 /* NikkoPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NikkoPage.swift; sourceTree = "<group>"; };
+		F340EB842B8EB55C00BFD481 /* ToshiPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToshiPage.swift; sourceTree = "<group>"; };
+		F340EB862B8EB56F00BFD481 /* NightlightPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightlightPage.swift; sourceTree = "<group>"; };
+		F340EB892B8EB59C00BFD481 /* TidydeskPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidydeskPage.swift; sourceTree = "<group>"; };
 		F38A73272B6B14F500723197 /* ArcNavvy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcNavvy.swift; sourceTree = "<group>"; };
 		F3D568A52B5B5B810097B079 /* swift-portfolio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swift-portfolio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3D568A82B5B5B810097B079 /* swift_portfolioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_portfolioApp.swift; sourceTree = "<group>"; };
@@ -44,12 +58,44 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		F306DC532B6B483D00108861 /* Playground */ = {
+		F306DC532B6B483D00108861 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				F340EB882B8EB58800BFD481 /* DesktopViews */,
+				F340EB7D2B8EB50C00BFD481 /* MobileViews */,
+				F340EB772B8EB4B400BFD481 /* WebViews */,
+				F3D568AA2B5B5B810097B079 /* ContentView.swift */,
 				F38A73272B6B14F500723197 /* ArcNavvy.swift */,
 			);
-			path = Playground;
+			path = Core;
+			sourceTree = "<group>";
+		};
+		F340EB772B8EB4B400BFD481 /* WebViews */ = {
+			isa = PBXGroup;
+			children = (
+				F340EB782B8EB4DB00BFD481 /* MangoPage.swift */,
+				F340EB7B2B8EB4F500BFD481 /* TritonPage.swift */,
+			);
+			name = WebViews;
+			sourceTree = "<group>";
+		};
+		F340EB7D2B8EB50C00BFD481 /* MobileViews */ = {
+			isa = PBXGroup;
+			children = (
+				F340EB7E2B8EB52100BFD481 /* AufnPage.swift */,
+				F340EB812B8EB54300BFD481 /* NikkoPage.swift */,
+				F340EB842B8EB55C00BFD481 /* ToshiPage.swift */,
+				F340EB862B8EB56F00BFD481 /* NightlightPage.swift */,
+			);
+			path = MobileViews;
+			sourceTree = "<group>";
+		};
+		F340EB882B8EB58800BFD481 /* DesktopViews */ = {
+			isa = PBXGroup;
+			children = (
+				F340EB892B8EB59C00BFD481 /* TidydeskPage.swift */,
+			);
+			path = DesktopViews;
 			sourceTree = "<group>";
 		};
 		F3D5689C2B5B5B810097B079 = {
@@ -72,8 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				F3D568A82B5B5B810097B079 /* swift_portfolioApp.swift */,
-				F3D568AA2B5B5B810097B079 /* ContentView.swift */,
-				F306DC532B6B483D00108861 /* Playground */,
+				F306DC532B6B483D00108861 /* Core */,
 				F306DC502B6B481000108861 /* Utilities */,
 				F3D568AC2B5B5B820097B079 /* Assets.xcassets */,
 				F3D568AE2B5B5B820097B079 /* Preview Content */,
@@ -160,8 +205,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3D568AB2B5B5B810097B079 /* ContentView.swift in Sources */,
+				F340EB792B8EB4DB00BFD481 /* MangoPage.swift in Sources */,
 				F306DC522B6B481F00108861 /* AnimationUtility.swift in Sources */,
+				F340EB822B8EB54300BFD481 /* NikkoPage.swift in Sources */,
+				F340EB872B8EB56F00BFD481 /* NightlightPage.swift in Sources */,
 				F3D568A92B5B5B810097B079 /* swift_portfolioApp.swift in Sources */,
+				F340EB7F2B8EB52100BFD481 /* AufnPage.swift in Sources */,
+				F340EB7C2B8EB4F500BFD481 /* TritonPage.swift in Sources */,
+				F340EB8A2B8EB59C00BFD481 /* TidydeskPage.swift in Sources */,
+				F340EB852B8EB55C00BFD481 /* ToshiPage.swift in Sources */,
 				F38A73282B6B14F500723197 /* ArcNavvy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,7 @@
 		F340EB852B8EB55C00BFD481 /* ToshiPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB842B8EB55C00BFD481 /* ToshiPage.swift */; };
 		F340EB872B8EB56F00BFD481 /* NightlightPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB862B8EB56F00BFD481 /* NightlightPage.swift */; };
 		F340EB8A2B8EB59C00BFD481 /* TidydeskPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB892B8EB59C00BFD481 /* TidydeskPage.swift */; };
+		F340EB8C2B8FDBBB00BFD481 /* ContentCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F340EB8B2B8FDBBB00BFD481 /* ContentCarouselView.swift */; };
 		F38A73282B6B14F500723197 /* ArcNavvy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38A73272B6B14F500723197 /* ArcNavvy.swift */; };
 		F3D568A92B5B5B810097B079 /* swift_portfolioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D568A82B5B5B810097B079 /* swift_portfolioApp.swift */; };
 		F3D568AB2B5B5B810097B079 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D568AA2B5B5B810097B079 /* ContentView.swift */; };
@@ -31,6 +32,7 @@
 		F340EB842B8EB55C00BFD481 /* ToshiPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToshiPage.swift; sourceTree = "<group>"; };
 		F340EB862B8EB56F00BFD481 /* NightlightPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightlightPage.swift; sourceTree = "<group>"; };
 		F340EB892B8EB59C00BFD481 /* TidydeskPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidydeskPage.swift; sourceTree = "<group>"; };
+		F340EB8B2B8FDBBB00BFD481 /* ContentCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCarouselView.swift; sourceTree = "<group>"; };
 		F38A73272B6B14F500723197 /* ArcNavvy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcNavvy.swift; sourceTree = "<group>"; };
 		F3D568A52B5B5B810097B079 /* swift-portfolio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swift-portfolio.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3D568A82B5B5B810097B079 /* swift_portfolioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_portfolioApp.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				F340EB772B8EB4B400BFD481 /* WebViews */,
 				F3D568AA2B5B5B810097B079 /* ContentView.swift */,
 				F38A73272B6B14F500723197 /* ArcNavvy.swift */,
+				F340EB8B2B8FDBBB00BFD481 /* ContentCarouselView.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				F3D568A92B5B5B810097B079 /* swift_portfolioApp.swift in Sources */,
 				F340EB7F2B8EB52100BFD481 /* AufnPage.swift in Sources */,
 				F340EB7C2B8EB4F500BFD481 /* TritonPage.swift in Sources */,
+				F340EB8C2B8FDBBB00BFD481 /* ContentCarouselView.swift in Sources */,
 				F340EB8A2B8EB59C00BFD481 /* TidydeskPage.swift in Sources */,
 				F340EB852B8EB55C00BFD481 /* ToshiPage.swift in Sources */,
 				F38A73282B6B14F500723197 /* ArcNavvy.swift in Sources */,

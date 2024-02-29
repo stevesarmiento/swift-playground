@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct ArcNavvy: View {
+    @Binding var selectedContent: String?
+
     @State private var searchText = ""
     @State private var isExpanded = false
     @State private var expandedContentType: ExpandedContentType = .none
-    @State private var selectedContent: String? = nil
+    @State private var spacing: CGFloat = 0
+    @State private var rotation: CGFloat = .zero
     @GestureState private var dragOffset = CGSize.zero
 
     @Namespace private var animation
@@ -116,14 +119,10 @@ struct ArcNavvy: View {
                             }
                         }
                     }
-            )   
-
-          if let selectedContentName = selectedContent {
-                contentView(for: selectedContentName)
-            }          
+            )           
         }
         .edgesIgnoringSafeArea(.all)
-        }
+        } 
     }
 }
 
@@ -154,33 +153,6 @@ extension ArcNavvy {
         }
     }
 
-    func contentView(for name: String) -> some View {
-        switch name {
-        case "Aufn":
-            return AnyView(AufnPage(onClose: closeContentPage))
-        case "Toshi":
-            return AnyView(ToshiPage(onClose: closeContentPage))
-        case "Nikko":
-            return AnyView(NikkoPage(onClose: closeContentPage))
-         case "Nightlight":
-            return AnyView(NightlightPage(onClose: closeContentPage))   
-         case "Tidydesk":
-            return AnyView(TidydeskPage(onClose: closeContentPage))  
-         case "Mango":
-            return AnyView(MangoPage(onClose: closeContentPage))  
-         case "Triton":
-            return AnyView(TritonPage(onClose: closeContentPage))          
-        default:
-            return AnyView(Text("Page not found"))
-        }
-    }
-
-    func closeContentPage() {
-        withAnimation {
-            selectedContent = nil
-        }
-    }
-
     struct VisualEffectBlur: UIViewRepresentable {
         var blurStyle: UIBlurEffect.Style
         
@@ -199,7 +171,7 @@ extension ArcNavvy {
                         let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
                         impactFeedbackGenerator.prepare() 
                         impactFeedbackGenerator.impactOccurred()
-                        // Action for Home
+                        self.selectedContent = "SHOW_CAROUSEL"
                     }) {
                         ZStack {
                             ZStack {
@@ -330,10 +302,15 @@ extension ArcNavvy {
             ScrollView {
                 // Web
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("Web")
-                        .font(.system(size: 14))
-                        .bold()
-                        .foregroundColor(.white.opacity(0.5))
+                    HStack{
+                        Image(systemName: "macwindow")
+                            .font(.system(size: 12))
+                            .foregroundColor(.white.opacity(0.3))
+                        Text("Web")
+                            .font(.system(size: 14))
+                            .bold()
+                            .foregroundColor(.white.opacity(0.6))                        
+                    }
                     ForEach(webPageLinks.indices, id: \.self) { index in
                         Button(action: {
                                 let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -374,10 +351,16 @@ extension ArcNavvy {
                 )
                 // Mobile
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("iOS")
-                        .font(.system(size: 14))
-                        .bold()
-                        .foregroundColor(.white.opacity(0.5))
+                    HStack{
+                        Image(systemName: "iphone")
+                            .font(.system(size: 12))
+                            .foregroundColor(.white.opacity(0.3))
+                        Text("iOS")
+                            .font(.system(size: 14))
+                            .bold()
+                            .foregroundColor(.white.opacity(0.6))                        
+                    }
+
                     ForEach(mobilePageLinks.indices, id: \.self) { index in
                         Button(action: {
                                 let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
@@ -418,10 +401,15 @@ extension ArcNavvy {
                 )
                 // macOS
                 VStack(alignment: .leading, spacing: 10) {
-                    Text("macOS")
-                        .font(.system(size: 14))
-                        .bold()
-                        .foregroundColor(.white.opacity(0.5))
+                    HStack{
+                        Image(systemName: "macbook")
+                            .font(.system(size: 12))
+                            .foregroundColor(.white.opacity(0.3))
+                        Text("macOS")
+                            .font(.system(size: 14))
+                            .bold()
+                            .foregroundColor(.white.opacity(0.6))                        
+                    }
                     ForEach(desktopPageLinks.indices, id: \.self) { index in
                          Button(action: {
                                 let impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)

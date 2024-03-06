@@ -13,7 +13,7 @@ struct NightlightPage: View {
 
     var body: some View {
         ZStack {
-            Color.black
+            Color(red: Double.random(in: 0...1), green: Double.random(in: 0...1), blue: Double.random(in: 0...1))
                 .ignoresSafeArea()
 
             VStack {

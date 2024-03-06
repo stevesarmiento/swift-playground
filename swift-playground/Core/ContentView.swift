@@ -87,9 +87,10 @@ var body: some View {
         
         //app switcher
             if let selectedContentName = selectedContent {
-                contentView(for: selectedContentName)
-            }
-        
+                 withAnimation {
+                     contentView(for: selectedContentName)
+                }
+            }        
         }
     }
 }

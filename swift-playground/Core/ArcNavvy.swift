@@ -128,17 +128,17 @@ struct ArcNavvy: View {
 
 extension ArcNavvy {
     
-    struct WebPageLink {
+    struct WebPageLink: Hashable {
+        let name: String
+        let iconName: String
+    }
+
+    struct DesktopPageLink: Hashable {
         let name: String
         let iconName: String
     }
     
-    struct DesktopPageLink {
-        let name: String
-        let iconName: String
-    }
-    
-    struct MobilePageLink {
+    struct MobilePageLink: Hashable {
         let name: String
         let iconName: String
     }
@@ -192,7 +192,7 @@ extension ArcNavvy {
                             }
                             .frame(width: 28, height: 30)
                             .rotationEffect(.degrees(7))
-                            .offset(x: 15)
+                            .offset(x: 15) 
                         }
                         .offset(x:-25, y:-3)
                     }

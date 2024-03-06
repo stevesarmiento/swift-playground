@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ToshiPage: View {
     @Environment(\.presentationMode) var presentationMode
+    // @GestureState private var dragOffset: CGFloat = 0
+
     var onClose: () -> Void
 
     var body: some View {
         ZStack {
-            Color.black
+            Color(red: Double.random(in: 0...1), green: Double.random(in: 0...1), blue: Double.random(in: 0...1))       
                 .ignoresSafeArea()
 
             VStack {
@@ -34,5 +36,17 @@ struct ToshiPage: View {
                     .foregroundColor(.white)
             }
         }
+        // .scaleEffect(1 - dragOffset / 2000)
+        // .gesture(
+        //     DragGesture()
+        //         .updating($dragOffset) { value, state, _ in
+        //             state = value.translation.height
+        //         }
+        //         .onEnded { value in
+        //             if value.translation.height > 50 {
+        //                 onClose()
+        //             }
+        //         }
+        // )
     }
 }

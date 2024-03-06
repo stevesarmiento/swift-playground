@@ -12,8 +12,6 @@ struct ContentCarouselView: View {
     var spacing: CGFloat = 0
     var rotation: Double
     
-    
-    //dismiss view
     @Environment(\.presentationMode) var presentationMode
     var onClose: () -> Void
     
@@ -24,7 +22,7 @@ struct ContentCarouselView: View {
 
     var body: some View {
         ZStack {
-            Color.gray.edgesIgnoringSafeArea(.all)
+                BlurBackground() 
             
             VStack{
                 GeometryReader {
@@ -36,11 +34,16 @@ struct ContentCarouselView: View {
                                     contentView(for: pageName)
                                         .frame(width: itemWidth, height: 600)
                                         .cornerRadius(30)
+                                        .shadow(color: Color.black.opacity(0.2), radius: 14 , x: 0, y: 9)
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {}
+                                        .pressAnimation()
                                         .visualEffect { content, geometryProxy in
                                             content
                                                 .rotation3DEffect(.init(degrees: rotation(geometryProxy)), axis: (x: 0, y: 0, z: 0), anchor: .center)
                                         }
                             }
+                            .padding(.trailing, 15)
                         }
                         .padding(.horizontal, (size.width - itemWidth) / 2)
                         .scrollTargetLayout()
@@ -49,23 +52,15 @@ struct ContentCarouselView: View {
                     .scrollIndicators(.hidden)
                     .scrollClipDisabled()
                 }
-
-                
-                HStack {
-                    Button(action: {
-                         onClose()
-                    }) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.gray.opacity(0.5))
-                            .clipShape(Circle())
-                    }
-                }
-                .padding()
             }
         }
         .edgesIgnoringSafeArea(.all) 
+        .onTapGesture {
+           withAnimation {
+             onClose()
+
+           }
+        }       
     }
     
     @ViewBuilder
@@ -100,6 +95,28 @@ extension ContentCarouselView {
         let degree = cappedProgress * (rotation * 2)
         
         return rotation - degree
+    }
+
+    struct BlurBackground: View {
+        var body: some View {
+            ZStack {
+                Color.black.opacity(0.8)
+                VisualEffectBlur(blurStyle: .systemThinMaterialDark)
+            }
+            .edgesIgnoringSafeArea(.all)
+        }
+    }
+
+    struct VisualEffectBlur: UIViewRepresentable {
+        var blurStyle: UIBlurEffect.Style
+        
+        func makeUIView(context: Context) -> UIVisualEffectView {
+            return UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
+        }
+        
+        func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+            uiView.effect = UIBlurEffect(style: blurStyle)
+        }
     }
     
 }
